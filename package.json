@@ -1,0 +1,22 @@
+{
+  "name": "ieng-project",
+  "version": "1.0.0",
+  "description": "This package is the implementation of Internet Engineering course project at Shahid Beheshti University.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrezashariati/ieng-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrezashariati/ieng-project/issues"
+  },
+  "homepage": "https://github.com/mrezashariati/ieng-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

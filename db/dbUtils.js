@@ -5,9 +5,17 @@ let polygons = undefined
 function loadDB(){
     require('dotenv').config()
     fs = require('fs')
-    let jsonString = fs.readFileSync(process.env.ROOT + 'db/db.json')
-    geojson = JSON.parse(jsonString)
-    loadPolygons()
+    try{
+        let jsonString = fs.readFileSync(process.env.ROOT + 'db/db.json')
+        geojson = JSON.parse(jsonString)
+        loadPolygons()
+    }catch(err){
+        console.log(err)
+    }
+}
+
+function saveDB(){
+
 }
 
 function loadPolygons(){
@@ -28,13 +36,24 @@ function getPolygons(){
 }
 
 function getPolygon(name){
+    if(typeof geojson === 'undefined'){
+        loadDB()
+    }
     if(polygons.hasOwnProperty(name)){
         return polygons.name
     }
-    return `polygon with name ${name} not found!`
+    return false
+}
+
+function addPolygon(coordinates,properties){
+    if(typeof geojson === 'undefined'){
+        loadDB()
+    }
+    polygons[properties['name']] = turf.polygon(coordinates,properties)
 }
 
 module.exports = {
     getPolygons,
     getPolygon,    
+    addPolygon,
 }

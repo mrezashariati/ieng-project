@@ -11,7 +11,7 @@ router.get('/polygons',function(req,res){
 })
 
 router.get('/testpoint',function(req,res){
-    let coordinates = req.body.geometry.coordinates
+    let coordinates = [parseFloat(req.query.long),parseFloat(req.query.lat)]
     positives = require(process.env.ROOT + 'polygons/polygonUtils').polygonsHasPoint(coordinates)
     res.send(positives)
 })
@@ -19,11 +19,8 @@ router.get('/testpoint',function(req,res){
 
 router.put('/addpolygon',function(req,res){
     addP = require(process.env.ROOT + 'polygons/polygonUtils').addPolygon
-    if(addP(req.body)){
-        res.send('polygon added succesfully.')
-    }else{
-        res.send('failed to add polygon.')
-    }
+    addP(req.body);
+    res.sendStatus(200)
 })
 
 module.exports = router

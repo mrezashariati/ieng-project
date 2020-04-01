@@ -43,4 +43,10 @@ jspm_packages/
 tmp/
 temp/
 
+# Database files
+db.json
+
+# OSX files
+.DS_Store
+
 # End of https://www.gitignore.io/api/node

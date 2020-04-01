@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/mrezashariati/ieng-project#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "@turf/turf": "^5.1.6",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

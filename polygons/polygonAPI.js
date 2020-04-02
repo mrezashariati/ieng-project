@@ -1,5 +1,7 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+let polygonUtils = require(process.env.ROOT + 'polygons/polygonUtils');
+let dbUtils = require(process.env.ROOT + 'db/dbUtils');
 
 router.use(function logger(req,res,next){
     console.log('polygon req')
@@ -7,20 +9,22 @@ router.use(function logger(req,res,next){
 })
 
 router.get('/polygons',function(req,res){
-    res.send(require(process.env.ROOT + 'db/dbUtils').getPolygons())
+    let getGeoJson = polygonUtils.getGeoJson
+    res.send(getGeoJson())
 })
 
 router.get('/testpoint',function(req,res){
     let coordinates = [parseFloat(req.query.long),parseFloat(req.query.lat)]
-    positives = require(process.env.ROOT + 'polygons/polygonUtils').polygonsHasPoint(coordinates)
+    positives = polygonUtils.polygonsHasPoint(coordinates)
     res.send(positives)
 })
     
 
 router.put('/addpolygon',function(req,res){
-    addP = require(process.env.ROOT + 'polygons/polygonUtils').addPolygon
-    addP(req.body);
-    res.sendStatus(200)
+    addP = polygonUtils.addPolygon;
+    getGeoJson = dbUtils.getGeoJson;
+    addP(req.body.geometry.coordinates,req.body.properties);
+    res.send(getGeoJson())
 })
 
 module.exports = router

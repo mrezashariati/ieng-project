@@ -1,5 +1,5 @@
 
-let geojson = undefined;
+let geojson
 let polygons = {};
 require('dotenv').config();
 let fs = require('fs');
@@ -9,15 +9,30 @@ let {initializeLogger,createLogger,log,getLogger} = require('../logger.js')
 function loadDB(){
     try{
         fs.exists('./db/db.json',(exists)=>{
-            if(!exists){
-                fs.writeFile('./db/db.json','{"type": "FeatureCollection","features": []}',()=>{})
+            if(exists){
+                fs.readFile('./db/db.json',(err,data)=>{
+                    if(!err){
+                        geojson = JSON.parse(data);
+                        loadPolygons()
+                    }else{
+                        throw err
+                    }
+                })
+            }else{
+                fs.writeFile('./db/db.json','{"type": "FeatureCollection","features": []}',()=>{
+                    fs.readFile('./db/db.json',(err,data)=>{
+                        if(!err){
+                            geojson = JSON.parse(data);
+                            loadPolygons()
+                        }else{
+                            throw err
+                        }
+                    })
+                })
             }
         })
-        let jsonString = fs.readFileSync('./db/db.json')
-        geojson = JSON.parse(jsonString)
-        loadPolygons()
     }catch(err){
-        log('error','internal error',err.toString())
+        log(message='internal error',level='error',err.stack)
     }
 }
 

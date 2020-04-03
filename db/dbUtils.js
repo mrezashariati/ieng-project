@@ -4,10 +4,15 @@ let polygons = {};
 require('dotenv').config();
 let fs = require('fs');
 turf = require('@turf/turf')
-let {createLogger,log,getLogger} = require(process.env.ROOT + 'logger.js')
+let {initializeLogger,createLogger,log,getLogger} = require(process.env.ROOT + 'logger.js')
 
 function loadDB(){
     try{
+        fs.exists(process.env.ROOT + 'db/db.json',(exists)=>{
+            if(!exists){
+                fs.writeFile(process.env.ROOT + 'db/db.json','{"type": "FeatureCollection","features": []}',()=>{})
+            }
+        })
         let jsonString = fs.readFileSync(process.env.ROOT + 'db/db.json')
         geojson = JSON.parse(jsonString)
         loadPolygons()
@@ -21,9 +26,6 @@ function saveDB(){
 }
 
 function getGeoJson(){
-    if(typeof geojson === 'undefined'){
-        loadDB()
-    }
     return geojson
 }
 
@@ -36,29 +38,21 @@ function loadPolygons(){
 }
 
 function getPolygons(){
-    if(typeof geojson === 'undefined'){
-        loadDB()
-    }
     return polygons;
 }
 
 function getPolygon(name){
-    if(typeof geojson === 'undefined'){
-        loadDB()
-    }
     return polygons[name];
 }
 
 function addPolygon(coordinates,properties){
-    if(typeof geojson === 'undefined'){
-        loadDB()
-    }
     newPolygon = turf.polygon(coordinates,properties);
     polygons[properties['name']] = newPolygon;
     geojson.features.push(newPolygon)
 }
 
 module.exports = {
+    loadDB,
     getPolygons,
     getPolygon,    
     addPolygon,

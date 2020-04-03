@@ -8,5 +8,8 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/gis',polygonAPI);
+app.get('/',(req,res)=>{
+    res.send('UP AND RUNNING...')
+})
 
 module.exports = app

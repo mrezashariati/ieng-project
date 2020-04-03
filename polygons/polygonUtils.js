@@ -1,19 +1,24 @@
 let dbUtils = require(process.env.ROOT + 'db/dbUtils');
 let turf = require('@turf/turf');
+const GJV = require('geojson-validation');
 
-function validatePolygon(coordinates,properties){
-    return true
+function validatePolygon(body){
+    return GJV.isFeature(body)
+    
 }
 
-function addPolygon(coordinates,properties){
-    let getPolygon = dbUtils.getPolygon
-    let addPolygon = dbUtils.addPolygon
-
-    if(!getPolygon(properties.name) && validatePolygon(coordinates,properties)){
-        addPolygon(coordinates,properties)
-        return true
+function addPolygon(body){
+    if(validatePolygon(body)){
+        let getPolygon = dbUtils.getPolygon
+        let addPolygon = dbUtils.addPolygon
+        let coordinates = body.geometry.coordinates
+        let properties = body.properties
+        if(!getPolygon(properties.name)){
+            addPolygon(coordinates,properties)
+        }
+    }else{
+        throw "invalid polygon"
     }
-    return false
 }
 
 function polygonsHasPoint(coordinate){

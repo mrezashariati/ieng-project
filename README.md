@@ -3,7 +3,6 @@ Project description: https://github.com/sehsanm/sbu-ieng-99/tree/master/HW1
 
 TODO:
 save new polygons to db.
-logging.
-request validation.
-error handling.
+error handling and logging using express middlewares.
+request validation using express-validator.
 deployment on heroku.

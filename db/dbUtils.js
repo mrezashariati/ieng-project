@@ -4,6 +4,7 @@ let polygons = {};
 require('dotenv').config();
 let fs = require('fs');
 turf = require('@turf/turf')
+let {createLogger,log,getLogger} = require(process.env.ROOT + 'logger.js')
 
 function loadDB(){
     try{
@@ -11,7 +12,7 @@ function loadDB(){
         geojson = JSON.parse(jsonString)
         loadPolygons()
     }catch(err){
-        console.log(err)
+        log('error','internal error',err.toString())
     }
 }
 
@@ -45,10 +46,7 @@ function getPolygon(name){
     if(typeof geojson === 'undefined'){
         loadDB()
     }
-    if(polygons.hasOwnProperty(name)){
-        return polygons.name
-    }
-    return false
+    return polygons[name];
 }
 
 function addPolygon(coordinates,properties){

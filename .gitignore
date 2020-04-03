@@ -49,4 +49,7 @@ db.json
 # OSX files
 .DS_Store
 
+# Test files
+test.js
+
 # End of https://www.gitignore.io/api/node

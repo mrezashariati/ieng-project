@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-let polygonUtils = require(process.env.ROOT + 'polygons/polygonUtils');
-let dbUtils = require(process.env.ROOT + 'db/dbUtils');
-let {initializeLogger,createLogger,log,getLogger} = require(process.env.ROOT + 'logger.js')
+let polygonUtils = require('./polygonUtils');
+let dbUtils = require('../db/dbUtils');
+let {initializeLogger,createLogger,log,getLogger} = require('../logger.js')
 
 router.use('/polygons',(req,res,next)=>{
     log(message = '/gis/polygons access')

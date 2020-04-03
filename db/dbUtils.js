@@ -4,16 +4,16 @@ let polygons = {};
 require('dotenv').config();
 let fs = require('fs');
 turf = require('@turf/turf')
-let {initializeLogger,createLogger,log,getLogger} = require(process.env.ROOT + 'logger.js')
+let {initializeLogger,createLogger,log,getLogger} = require('../logger.js')
 
 function loadDB(){
     try{
-        fs.exists(process.env.ROOT + 'db/db.json',(exists)=>{
+        fs.exists('./db/db.json',(exists)=>{
             if(!exists){
-                fs.writeFile(process.env.ROOT + 'db/db.json','{"type": "FeatureCollection","features": []}',()=>{})
+                fs.writeFile('./db/db.json','{"type": "FeatureCollection","features": []}',()=>{})
             }
         })
-        let jsonString = fs.readFileSync(process.env.ROOT + 'db/db.json')
+        let jsonString = fs.readFileSync('./db/db.json')
         geojson = JSON.parse(jsonString)
         loadPolygons()
     }catch(err){

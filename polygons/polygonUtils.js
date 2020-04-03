@@ -1,4 +1,4 @@
-let dbUtils = require(process.env.ROOT + 'db/dbUtils');
+let dbUtils = require('../db/dbUtils');
 let turf = require('@turf/turf');
 const GJV = require('geojson-validation');
 

@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-polygonAPI = require(process.env.ROOT + '/polygons/polygonAPI')
+polygonAPI = require('./polygons/polygonAPI')
 const bodyParser = require('body-parser')
 
 // api declaration goes here..

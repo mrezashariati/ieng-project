@@ -17,7 +17,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/test_area',(req,res)=>{
-    res.render('test.ejs',{name:"mreza"})
+    
 })
 
 module.exports = app
